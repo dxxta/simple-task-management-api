@@ -1,0 +1,193 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Simple Task Management API Petstore - OpenAPI 3.0",
+    "description": "This is a sample Task Management API based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "paths": {
+    "/tasks": {
+      "get": {
+        "tags": ["tasks"],
+        "summary": "Get all tasks",
+        "description": "",
+        "operationId": "getTasks",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "description": "the task title",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dueDate",
+            "in": "path",
+            "description": "the task due date",
+            "required": false,
+            "schema": {
+              "type": "Date"
+            }
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "the task status",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tasks"
+                  }
+                }
+              },
+              "application/xml": {
+                "type": "array",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tasks"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}": {
+      "get": {
+        "tags": ["tasks"],
+        "summary": "Find task by ID",
+        "description": "Returns a single task",
+        "operationId": "getTasksById",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "ID of task to return",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "petstore_auth": ["write:pets", "read:pets"]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Tasks": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "6a958109-7772-4e4a-9d83-53a9cc18be90"
+          },
+          "title": {
+            "type": "string",
+            "example": "exercise"
+          },
+          "description": {
+            "type": "string",
+            "example": "time to exercise"
+          },
+          "dueDate": {
+            "type": "string",
+            "example": "2024-08-17T20:29:55.000Z"
+          },
+          "status": {
+            "type": "string",
+            "example": "progress"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2024-08-17T20:29:55.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2024-08-17T20:29:55.000Z"
+          }
+        },
+        "xml": {
+          "name": "tasks"
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "result": {
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      }
+    }
+  }
+}
