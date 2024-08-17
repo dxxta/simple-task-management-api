@@ -6,11 +6,11 @@ Simple Management Tasks API
 
 ### Hardware
 
-| Component                  | Minimum                                             | Recommended\*                                   | Maximum   |
-| -------------------------- | --------------------------------------------------- | ----------------------------------------------- | --------- |
-| CPU socket                 | 1.3 GHz (64-bit processor) or faster for multi-core | 3.1 GHz (64-bit processor) or faster multi-core | 2 sockets |
-| Memory (RAM)               | 8 GB                                                | 16 GB                                           | 64 GB     |
-| Hard disks dan penyimpanan | 10 GB hard disk with a 60 GB system partition       |                                                 | No limit  |
+| Component              | Minimum                                             | Recommended\*                                   | Maximum   |
+| ---------------------- | --------------------------------------------------- | ----------------------------------------------- | --------- |
+| CPU socket             | 1.3 GHz (64-bit processor) or faster for multi-core | 3.1 GHz (64-bit processor) or faster multi-core | 2 sockets |
+| Memory (RAM)           | 8 GB                                                | 16 GB                                           | 64 GB     |
+| Hard disks and storage | 10 GB hard disk with a 60 GB system partition       |                                                 | No limit  |
 
 ### Software
 
@@ -18,7 +18,7 @@ Simple Management Tasks API
 - `mysql`, see full documentation [official](https://www.docker.com/)
 - `docker & docker compose`, see full documentation [official](https://www.docker.com/)
 
-## Instalasi
+## Installation
 
 1.  Make sure you have docker installed on your computer. You can donwload here [docker](https://docs.docker.com/engine/install/)
 2.  Open terminal/shell on this folder

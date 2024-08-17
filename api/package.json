@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon",
     "start": "npx ts-node ./src/server.ts",
-    "migrate": "npx prisma migrate dev --name update"
+    "migrate": "npx prisma migrate dev --name update",
+    "generate": "npx prisma generate"
   },
   "author": "dxxta",
   "license": "ISC",

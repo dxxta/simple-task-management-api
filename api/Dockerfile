@@ -8,5 +8,6 @@ COPY prisma ./prisma/
 RUN npm install
 # Copy the rest of the application files to the container
 COPY . .
-CMD [ "npm", "run", "migrate" ]
+CMD [ "npm", "run", "migrate", "-y" ]
+CMD [ "npm", "run", "generate", ]
 CMD [ "npm", "run", "start" ]
