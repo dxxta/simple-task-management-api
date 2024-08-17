@@ -78,6 +78,106 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": ["tasks"],
+        "summary": "Add a new task",
+        "description": "Create a new task and store to database",
+        "operationId": "addTask",
+        "requestBody": {
+          "description": "id is optional",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Something wrong"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["tasks"],
+        "summary": "Partially update a task",
+        "description": "Update a task partially and save to database",
+        "operationId": "updateTask",
+        "requestBody": {
+          "description": "id is required",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid task input"
+          },
+          "500": {
+            "description": "Something wrong"
+          }
+        }
       }
     },
     "/tasks/{taskId}": {
@@ -129,18 +229,105 @@
             "petstore_auth": ["write:pets", "read:pets"]
           }
         ]
+      },
+      "patch": {
+        "tags": ["tasks"],
+        "summary": "Partially update a task by an id",
+        "description": "Update a task partially by task id and save to database",
+        "operationId": "updateTaskById",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "Task id to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Tasks"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid task input"
+          },
+          "500": {
+            "description": "Something wrong"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["tasks"],
+        "summary": "Deletes a task",
+        "description": "delete a task",
+        "operationId": "deleteTaskByID",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "Task id to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid task value"
+          }
+        }
       }
     }
   },
   "components": {
     "schemas": {
+      "id": {
+        "type": "string",
+        "format": "uuid",
+        "example": "6a958109-7772-4e4a-9d83-53a9cc18be90"
+      },
       "Tasks": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "6a958109-7772-4e4a-9d83-53a9cc18be90"
+            "$ref": "#/components/schemas/id"
           },
           "title": {
             "type": "string",
@@ -178,7 +365,10 @@
             "type": "boolean"
           },
           "result": {
-            "type": "array"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/id"
+            }
           },
           "message": {
             "type": "string"

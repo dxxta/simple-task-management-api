@@ -23,8 +23,6 @@ export default class TasksController {
       }
 
       const filter = {
-        skip: (+page - 1) * +limit,
-        take: +limit,
         where: {
           ...(!!title && {
             title: {
@@ -42,11 +40,19 @@ export default class TasksController {
             },
           }),
         },
+        orderBy: {
+          dueDate: "asc",
+        },
       };
 
       const executed = await dbClient.$transaction([
-        dbClient.tasks.findMany(filter),
-        dbClient.tasks.count({ ...filter, take: undefined }),
+        dbClient.tasks.findMany(
+          Object.assign(
+            { skip: (+page - 1) * +limit, take: +limit },
+            filter
+          ) as any
+        ),
+        dbClient.tasks.count(filter as any),
       ]);
 
       res.status(200).json({
@@ -105,22 +111,34 @@ export default class TasksController {
         });
       }
 
-      const id = v4();
+      let resTaskById = await dbClient.tasks.findFirst({
+        where: {
+          id: validatedBody.payload.id,
+        },
+      });
+
+      if (resTaskById ?? !validatedBody.payload.id) {
+        validatedBody.payload.id = v4();
+      }
+
       await dbClient.$queryRawUnsafe(
         `INSERT INTO ${
           TasksController.tableName
-        } (id, title, description, status, dueDate) VALUES ('${id}', '${
-          validatedBody.payload.title
-        }', '${validatedBody.payload.description}', '${
-          validatedBody.payload.status
-        }', '${intoSqlDate(validatedBody.payload.dueDate as Date)}')`
+        } (id, title, description, status, dueDate) VALUES ('${
+          validatedBody.payload.id
+        }', '${validatedBody.payload.title}', '${
+          validatedBody.payload.description
+        }', '${validatedBody.payload.status}', '${intoSqlDate(
+          validatedBody.payload.dueDate as Date
+        )}')`
       );
+
+      delete validatedBody.payload.isUpdate;
 
       res.status(201).json({
         success: true,
         message: "successfully create a task",
         result: {
-          id,
           ...JSON.parse(JSON.stringify(validatedBody.payload)),
         },
       });
