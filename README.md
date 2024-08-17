@@ -6,7 +6,7 @@ Simple Management Tasks API
 
 ![docs preview](images/preview.png)
 
-## Spesifications
+## Specifications
 
 ### Hardware
 
