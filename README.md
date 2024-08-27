@@ -1,6 +1,6 @@
 # Tasks API
 
-Simple Management Tasks API
+Simple Project to Management Tasks API
 
 ## Preview
 
